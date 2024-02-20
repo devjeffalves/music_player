@@ -4,12 +4,90 @@ import { AntDesign } from '@expo/vector-icons';
 import {Audio}  from 'expo-av';
 
 export default function Player(props) {
-    const handlePlay = async ()=>{
+
+    const handleBack = async()=>{
+        let newIndex = props.audioIndex - 1;
+        if(newIndex < 0) {
+            newIndex = props.musics.length - 1
+        }
+        props.setAudioIndex(newIndex);
+
+        let curFile = props.musics[newIndex].file;
+
+        let newMusics = props.musics.filter((val,k) =>{
+            if(newIndex == k){
+              props.musics[k].playing = true;
+
+              curFile = props.musics[k].file;
+             
+            }
+            else{
+              props.musics[k].playing = false;
+            }
+      
+            return props.musics[k];
+          })
+          //reproduzir audio em questão
+          if(props.audio != null){
+            props.audio.unloadAsync();  
+        }
+            let curAudio = new Audio.Sound();
+            try{
+                await curAudio.loadAsync(curFile);
+                await curAudio.playAsync();
+
+            }catch(error){}
+            props.setAudio(curAudio);
+            props.setMusics(newMusics);
+            props.setPlaying(true);
+
+    }
+
+    const handleNext = async() =>{
+            let newIndex = props.audioIndex + 1;
+            if(newIndex >= props.musics.length) {
+                newIndex = 0;
+            }
+            props.setAudioIndex(newIndex);
+    
+            let curFile = props.musics[newIndex].file;
+    
+            let newMusics = props.musics.filter((val,k) =>{
+                if(newIndex == k){
+                  props.musics[k].playing = true;
+    
+                  curFile = props.musics[k].file;
+                 
+                }
+                else{
+                  props.musics[k].playing = false;
+                }
+          
+                return props.musics[k];
+              })
+    
+              if(props.audio != null){
+                props.audio.unloadAsync();  
+            }
+                let curAudio = new Audio.Sound();
+                try{
+                    await curAudio.loadAsync(curFile);
+                    await curAudio.playAsync();
+    
+                }catch(error){}
+                props.setAudio(curAudio);
+                props.setMusics(newMusics);
+                props.setPlaying(true);
+    }
+
+
+    const handlePlay = async()=>{
         let curFile = props.musics[props.audioIndex].file;
 
         let newMusics = props.musics.filter((val,k) =>{
-            if(id.audioIndex == k){
-              props.musics[id].playing = true;
+            if(props.audioIndex == k){
+              props.musics[k].playing = true;
+
               curFile = props.musics[k].file;
             
             }
@@ -42,6 +120,7 @@ export default function Player(props) {
           } catch{error}{}
  
     }
+    
     const handlePause = async()=>{
         if(props.audio!= null){
             props.audio.pauseAsync();
@@ -53,7 +132,7 @@ export default function Player(props) {
     return (
         <View style = {styles.Player}>
 
-            <TouchableOpacity style={{marginRight: 20, marginLeft: 20}}>
+            <TouchableOpacity onPress={()=>handleBack()} style={{marginRight: 20, marginLeft: 20}}>
             <AntDesign name="banckward" size={35} color="white" />
             </TouchableOpacity>
 
@@ -63,12 +142,12 @@ export default function Player(props) {
             <AntDesign name="playcircleo" size={35} color="white" />
             </TouchableOpacity>
             :
-            <TouchableOpacity onPress={()=> handlePause()} style={{marginRight: 20, marginLeft: 20}}>
+            <TouchableOpacity onPress={()=>handlePause()} style={{marginRight: 20, marginLeft: 20}}>
             <AntDesign name="pausecircleo" size={35} color="white" />
             </TouchableOpacity>
 
             }
-            <TouchableOpacity style={{marginRight: 20, marginLeft: 20}}>
+            <TouchableOpacity onPress={()=>handleNext()} style={{marginRight: 20, marginLeft: 20}}>
             <AntDesign name="forward" size={35} color="white" />
             </TouchableOpacity>
 

@@ -103,6 +103,7 @@ export default function App() {
         musics[id].playing = true;
         curFile = musics[k].file;
         setPlaying(true);
+        setAudioIndex(id);
       }
       else{
         musics[k].playing = false;
@@ -172,7 +173,7 @@ export default function App() {
 
     </ScrollView>
   
-    <Player playing={playing} setPlaying={setPlaying} audioIndex={audioIndex}
+    <Player playing={playing} setPlaying={setPlaying} setAudioIndex={setAudioIndex} audioIndex={audioIndex}
     musics={musics} setMusics={setMusics} audio={audio} setAudio={setAudio}></Player>
     </View>
     
