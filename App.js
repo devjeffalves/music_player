@@ -66,33 +66,6 @@ export default function App() {
       playing: false,
       file: require ('./meusPropriosMeios.mp3')
     },
-    {
-      name: 'Meus próprios meios',
-      artist: 'Oficina G3',
-      playing: false,
-      file: require ('./meusPropriosMeios.mp3')
-    },
-
-    {
-      name: 'Meus próprios meios',
-      artist: 'Oficina G3',
-      playing: false,
-      file: require ('./meusPropriosMeios.mp3')
-    },
-
-    {
-      name: 'Meus próprios meios',
-      artist: 'Oficina G3',
-      playing: false,
-      file: require ('./meusPropriosMeios.mp3')
-    },
-
-    {
-      name: 'Meus próprios meios',
-      artist: 'Oficina G3',
-      playing: false,
-      file: require ('./meusPropriosMeios.mp3')
-    },
 
   ]);
 
